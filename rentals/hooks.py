@@ -120,6 +120,9 @@ app_license = "mit"
 # permission_query_conditions = {
 # 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
 # }
+permission_query_conditions = {
+    "Rental_Vehicle": "rentals.api.get_query_conditions_for_vehicle",
+}
 #
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
@@ -144,7 +147,7 @@ app_license = "mit"
 # 		"on_trash": "method"
 # 	}
 # }
-
+doc_events = {"ToDo": {"before_insert": "rentals.api.throw_emoji"}}
 # Scheduled Tasks
 # ---------------
 
@@ -165,6 +168,10 @@ app_license = "mit"
 # 		"rentals.tasks.monthly"
 # 	],
 # }
+scheduler_events = {
+    "weekly": ["rentals.api.send_payment_reminders"],
+    "Cron": {"30 15 * * Sun": ["rentals.api.send_payment_reminders"]},
+}
 
 # Testing
 # -------
@@ -241,4 +248,3 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
